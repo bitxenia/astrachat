@@ -14,6 +14,10 @@ export interface AstrachatInit {
   datastore?: Datastore;
   blockstore?: Blockstore;
   publicIp?: string;
+  tcpPort?: number;
+  wsPort?: number;
+  wssPort?: number;
+  orbitDbDataDir?: string;
 }
 
 export async function createAstrachat(
@@ -27,6 +31,10 @@ export async function createAstrachat(
     datastore: init.datastore ?? new MemoryDatastore(),
     blockstore: init.blockstore ?? new MemoryBlockstore(),
     publicIp: init.publicIp ?? "0.0.0.0",
+    TcpPort: init.tcpPort,
+    WSPort: init.wsPort,
+    WSSPort: init.wssPort,
+    orbitDbDataDir: init.orbitDbDataDir,
   });
 
   return new AstrachatNode(chatSpace, astraDb);
