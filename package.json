@@ -31,7 +31,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@bitxenia/astradb": "^0.0.10",
+    "@bitxenia/astradb": "^0.0.11",
     "blockstore-core": "^5.0.2",
     "datastore-core": "^10.0.2"
   }
