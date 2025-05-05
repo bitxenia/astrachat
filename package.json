@@ -1,0 +1,38 @@
+{
+  "name": "@bitxenia/astrachat",
+  "version": "0.0.1",
+  "description": "Decentralized p2p real-time chat on IPFS ",
+  "keywords": [
+    "chat",
+    "ipfs",
+    "orbitdb",
+    "real",
+    "time",
+    "decentralized"
+  ],
+  "homepage": "https://github.com/bitxenia/astrachat#readme",
+  "bugs": {
+    "url": "https://github.com/bitxenia/astrachat/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitxenia/astrachat.git"
+  },
+  "license": "MIT",
+  "author": "bitxenia",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@bitxenia/astradb": "^0.0.10",
+    "blockstore-core": "^5.0.2",
+    "datastore-core": "^10.0.2"
+  }
+}
