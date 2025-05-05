@@ -47,6 +47,7 @@ export class Chat {
 
   public getMessages(onNewMessage?: ChatMessageCallback): ChatMessage[] {
     if (onNewMessage) this.listenToNewMessages(onNewMessage);
+    this.messages.sort((a, b) => a.timestamp - b.timestamp);
     return this.messages;
   }
 
