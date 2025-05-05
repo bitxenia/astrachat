@@ -55,7 +55,7 @@ receives a new message.
 
 ```typescript
 const callback = (message: ChatMessage) => console.log("New: ", message);
-await node.createChat("Example chat", callback);
+await node.createChat("Example chat", onNewMessage: callback);
 ```
 
 Now that you've created a chat, you can start sending messages to it. Note that
@@ -75,7 +75,12 @@ const messages = await node.getMessages("Example chat");
 console.log("Messages", messages);
 ```
 
-The messages aren't guaranteed to be in any particular order.
+You can also add a callback function when connecting to an existing chat, so that you can stay up to date with the latest messages sent.
+
+```typescript
+const callback = (message: ChatMessage) => console.log("New: ", message);
+const messages = await node.getMessages("Example chat", onNewMessage: callback);
+```
 
 A chat space can contain multiple chats. Astrachat allows the user to list all
 of them.
@@ -129,7 +134,7 @@ npm run build
 
 To be able to run Astrachat in more than one instance per machine, you'll need
 to change the ports of the instances to be unique. Also, the datastore,
-blockstore, and OrbitDB data directories'll also need to be unique to the
+blockstore, and data directories'll also need to be unique to the
 instance.
 
 ```typescript
@@ -139,10 +144,10 @@ return await createAstrachat({
   isCollaborator: true,
   datastore,
   blockstore,
-  tcpPort: 39001,
-  wsPort: 39002,
-  wssPort: 39003,
-  orbitDbDataDir: "./data/node1/orbitdb",
+  tcpPort: 51001,
+  wsPort: 51002,
+  wssPort: 51003,
+  dataDir: "./data/node1",
 });
 ```
 
@@ -162,9 +167,9 @@ creating the node in the `createAstrachat` function.
 
 The ports that need to be opened manually are:
 
-- `40001` used to receive `TCP` incoming connections.
-- `40002` used to receive `WebSocket` incoming connections.
-- `40003` used to receive `WebSocketSecure` upgraded by `autoTLS` incoming connections.
+- `50001` used to receive `TCP` incoming connections.
+- `50002` used to receive `WebSocket` incoming connections.
+- `50003` used to receive `WebSocketSecure` upgraded by `autoTLS` incoming connections.
 
 If this doesn't work, your ISP may be using Double NAT, which prevents
 incoming connections. In this case, you may need to contact your ISP to request
