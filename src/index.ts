@@ -17,11 +17,11 @@ export interface AstrachatInit {
   tcpPort?: number;
   wsPort?: number;
   wssPort?: number;
-  orbitDbDataDir?: string;
+  dataDir?: string;
 }
 
 export async function createAstrachat(
-  init: AstrachatInit,
+  init: AstrachatInit
 ): Promise<AstrachatNode> {
   const chatSpace = init.chatSpace ?? "bitxenia-chat";
   const astraDb = await createAstraDb({
@@ -31,10 +31,10 @@ export async function createAstrachat(
     datastore: init.datastore ?? new MemoryDatastore(),
     blockstore: init.blockstore ?? new MemoryBlockstore(),
     publicIp: init.publicIp ?? "0.0.0.0",
-    TcpPort: init.tcpPort,
-    WSPort: init.wsPort,
-    WSSPort: init.wssPort,
-    orbitDbDataDir: init.orbitDbDataDir,
+    TcpPort: init.tcpPort ?? 50001,
+    WSPort: init.wsPort ?? 50002,
+    WSSPort: init.wssPort ?? 50003,
+    dataDir: init.dataDir,
   });
 
   return new AstrachatNode(chatSpace, astraDb);
@@ -43,12 +43,12 @@ export async function createAstrachat(
 export interface Astrachat {
   createChat(
     chatName: string,
-    onNewMessage: ChatMessageCallback,
+    onNewMessage: ChatMessageCallback
   ): Promise<void>;
 
   getMessages(
     chatName: string,
-    onNewMessage: ChatMessageCallback,
+    onNewMessage: ChatMessageCallback
   ): Promise<ChatMessage[]>;
 
   sendMessage(chatName: string, text: string, alias?: string): Promise<void>;
