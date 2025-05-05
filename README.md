@@ -144,9 +144,9 @@ return await createAstrachat({
   isCollaborator: true,
   datastore,
   blockstore,
-  tcpPort: 39001,
-  wsPort: 39002,
-  wssPort: 39003,
+  tcpPort: 51001,
+  wsPort: 51002,
+  wssPort: 51003,
   dataDir: "./data/node1",
 });
 ```
