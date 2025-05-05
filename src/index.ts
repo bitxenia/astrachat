@@ -2,9 +2,9 @@ import type { Blockstore } from "interface-blockstore";
 import type { Datastore } from "interface-datastore";
 import { MemoryBlockstore } from "blockstore-core";
 import { MemoryDatastore } from "datastore-core";
-import { ChatMessage } from "./message.js";
-import { AstrachatNode } from "./astrachat.js";
-import { ChatMessageCallback } from "./chat.js";
+import { ChatMessage } from "./message";
+import { AstrachatNode } from "./astrachat";
+import { ChatMessageCallback } from "./chat";
 import { createAstraDb } from "@bitxenia/astradb";
 
 export interface AstrachatInit {
@@ -21,7 +21,7 @@ export interface AstrachatInit {
 }
 
 export async function createAstrachat(
-  init: AstrachatInit
+  init: AstrachatInit,
 ): Promise<AstrachatNode> {
   const chatSpace = init.chatSpace ?? "bitxenia-chat";
   const astraDb = await createAstraDb({
@@ -43,12 +43,12 @@ export async function createAstrachat(
 export interface Astrachat {
   createChat(
     chatName: string,
-    onNewMessage: ChatMessageCallback
+    onNewMessage?: ChatMessageCallback,
   ): Promise<void>;
 
   getMessages(
     chatName: string,
-    onNewMessage: ChatMessageCallback
+    onNewMessage?: ChatMessageCallback,
   ): Promise<ChatMessage[]>;
 
   sendMessage(chatName: string, text: string, alias?: string): Promise<void>;

@@ -1,5 +1,5 @@
 import { AstraDb } from "@bitxenia/astradb";
-import { ChatMessage, constructMessage } from "./message.js";
+import { ChatMessage, constructMessage } from "./message";
 
 export type ChatMessageCallback = (message: ChatMessage) => void;
 
@@ -51,7 +51,6 @@ export class Chat {
   }
 
   public async sendMessage(message: ChatMessage) {
-    this.messages.push(message);
     await this.astraDb.add(this.chatName, JSON.stringify(message));
   }
 
@@ -59,7 +58,6 @@ export class Chat {
     this.astraDb.events.on(
       `${this.chatSpace}::${this.chatName}`,
       (value: string) => {
-        console.log(`New message received for ${this.chatName}: `, value);
         const newMessage = constructMessage(value);
         this.messages.push(newMessage);
         callback(newMessage);

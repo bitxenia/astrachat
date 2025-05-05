@@ -1,6 +1,6 @@
 import { AstraDb } from "@bitxenia/astradb";
-import { Chat, ChatMessageCallback } from "./chat.js";
-import { Astrachat, ChatMessage } from "./index.js";
+import { Chat, ChatMessageCallback } from "./chat";
+import { Astrachat, ChatMessage } from "./index";
 
 export class AstrachatNode implements Astrachat {
   chatSpace: string;
