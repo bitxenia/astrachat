@@ -4,13 +4,19 @@ import { Astrachat, ChatMessage } from "./index";
 
 export class AstrachatNode implements Astrachat {
   chatSpace: string;
+  alias: string;
   astraDb: AstraDb;
   chats: Map<string, Chat>;
 
-  constructor(chatSpace: string, astraDb: AstraDb) {
+  constructor(chatSpace: string, alias: string, astraDb: AstraDb) {
     this.chatSpace = chatSpace;
     this.astraDb = astraDb;
     this.chats = new Map();
+
+    if (!alias) {
+      this.alias = this.astraDb.getLoginPublicKey();
+    }
+    this.alias = alias;
   }
 
   public async createChat(
@@ -34,12 +40,12 @@ export class AstrachatNode implements Astrachat {
     return chat.getMessages(onNewMessage);
   }
 
-  public async sendMessage(chatName: string, text: string, alias: string) {
+  public async sendMessage(chatName: string, text: string) {
     const chat = await this.getChat(chatName);
     const message: ChatMessage = {
       id: crypto.randomUUID(),
       sender: this.getUserId(),
-      senderAlias: alias,
+      senderAlias: this.alias,
       message: text,
       timestamp: Date.now(),
     };
@@ -56,6 +62,14 @@ export class AstrachatNode implements Astrachat {
 
   public async getLoginKey(): Promise<string> {
     return await this.astraDb.getLoginPrivateKey();
+  }
+
+  public getAlias(): string {
+    return this.alias;
+  }
+
+  public setChatAlias(alias: string): void {
+    this.alias = alias;
   }
 
   private async getChat(chatName: string): Promise<Chat> {

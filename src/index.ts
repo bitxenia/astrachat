@@ -9,6 +9,7 @@ import { createAstraDb } from "@bitxenia/astradb";
 
 export interface AstrachatInit {
   chatSpace?: string;
+  alias?: string;
   loginKey?: string;
   isCollaborator?: boolean;
   datastore?: Datastore;
@@ -24,6 +25,7 @@ export async function createAstrachat(
   init: AstrachatInit,
 ): Promise<AstrachatNode> {
   const chatSpace = init.chatSpace ?? "bitxenia-chat";
+  const alias = init.alias ?? "";
   const astraDb = await createAstraDb({
     dbName: chatSpace,
     loginKey: init.loginKey,
@@ -37,7 +39,7 @@ export async function createAstrachat(
     dataDir: init.dataDir,
   });
 
-  return new AstrachatNode(chatSpace, astraDb);
+  return new AstrachatNode(chatSpace, alias, astraDb);
 }
 
 export interface Astrachat {
@@ -58,6 +60,10 @@ export interface Astrachat {
   getUserId(): string;
 
   getLoginKey(): Promise<string>;
+
+  getAlias(): string;
+
+  setChatAlias(alias: string): void;
 }
 
 export { ChatMessage } from "./message";
