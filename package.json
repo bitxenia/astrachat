@@ -1,6 +1,6 @@
 {
   "name": "@bitxenia/astrachat",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Decentralized p2p real-time chat on IPFS ",
   "keywords": [
     "chat",
