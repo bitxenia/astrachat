@@ -7,6 +7,7 @@ test("Chat.create loads existing messages", async () => {
 
   const message: ChatMessage = {
     id: "1",
+    parentId: "",
     senderAlias: "Bob",
     sender: "123",
     message: "Hello",
@@ -31,6 +32,7 @@ test("Chat.sendMessage emits and stores a message", async () => {
 
   const message: ChatMessage = {
     id: "1",
+    parentId: "",
     sender: "123",
     senderAlias: "Bob",
     message: "Hi again!",
@@ -48,6 +50,7 @@ test("Chat.getMessages returns existing messages", async () => {
 
   const message: ChatMessage = {
     id: "1",
+    parentId: "",
     sender: "123",
     senderAlias: "Alice",
     message: "Hey there!",
@@ -72,6 +75,7 @@ test("Chat listens to new messages and calls callback", async () => {
 
   const newMessage: ChatMessage = {
     id: "3",
+    parentId: "",
     sender: "123",
     senderAlias: "Bob",
     message: "What’s up?",
