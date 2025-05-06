@@ -1,6 +1,7 @@
 import { AstraDb } from "@bitxenia/astradb";
 import { Chat, ChatMessageCallback } from "./chat";
 import { Astrachat, ChatMessage } from "./index";
+import { createMessage } from "./message";
 
 export class AstrachatNode implements Astrachat {
   chatSpace: string;
@@ -46,14 +47,7 @@ export class AstrachatNode implements Astrachat {
     parentId?: string,
   ): Promise<void> {
     const chat = await this.getChat(chatName);
-    const message: ChatMessage = {
-      id: crypto.randomUUID(),
-      parentId: parentId || "",
-      sender: this.getUserId(),
-      senderAlias: this.alias,
-      message: text,
-      timestamp: Date.now(),
-    };
+    const message = createMessage(this.getUserId(), this.alias, text, parentId);
     await chat.sendMessage(message);
   }
 

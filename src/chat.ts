@@ -1,5 +1,5 @@
 import { AstraDb } from "@bitxenia/astradb";
-import { ChatMessage, constructMessage } from "./message";
+import { ChatMessage, constructMessage, createMessage } from "./message";
 
 export type ChatMessageCallback = (message: ChatMessage) => void;
 
@@ -22,6 +22,10 @@ export class Chat {
       messages = rawMessages.map((rawMessage: string) =>
         constructMessage(rawMessage),
       );
+    } else {
+      const firstMessage = createMessage("astrachat", "Astrachat", "");
+      await astraDb.add(chatName, `${chatName} created in ${chatSpace}`);
+      messages = [firstMessage];
     }
 
     return new Chat(chatSpace, chatName, messages, astraDb, onNewMessage);

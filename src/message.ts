@@ -7,6 +7,22 @@ export type ChatMessage = {
   timestamp: number;
 };
 
+export function createMessage(
+  sender: string,
+  senderAlias: string,
+  message: string,
+  parentId?: string,
+): ChatMessage {
+  return {
+    id: crypto.randomUUID(),
+    parentId: parentId || "",
+    sender,
+    senderAlias,
+    message,
+    timestamp: Date.now(),
+  };
+}
+
 export function constructMessage(rawMessage: string): ChatMessage {
   const message = JSON.parse(rawMessage);
   if (!isChatMessage(message)) {

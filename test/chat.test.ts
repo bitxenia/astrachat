@@ -62,7 +62,8 @@ test("Chat.getMessages returns existing messages", async () => {
   const chat = await Chat.create("chatspace", "room1", mockDb as any);
   const messages = chat.getMessages();
 
-  expect(messages).toEqual([message]);
+  expect(messages).toHaveLength(1);
+  expect(messages[0]).toEqual(message);
 });
 
 test("Chat listens to new messages and calls callback", async () => {
