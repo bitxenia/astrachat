@@ -53,7 +53,7 @@ export interface Astrachat {
     onNewMessage?: ChatMessageCallback,
   ): Promise<ChatMessage[]>;
 
-  sendMessage(chatName: string, text: string, alias?: string): Promise<void>;
+  sendMessage(chatName: string, text: string, parentId?: string): Promise<void>;
 
   getChatList(): Promise<string[]>;
 

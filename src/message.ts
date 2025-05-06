@@ -1,5 +1,6 @@
 export type ChatMessage = {
   id: string;
+  parentId: string;
   sender: string;
   senderAlias: string;
   message: string;

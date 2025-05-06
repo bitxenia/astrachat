@@ -40,10 +40,15 @@ export class AstrachatNode implements Astrachat {
     return chat.getMessages(onNewMessage);
   }
 
-  public async sendMessage(chatName: string, text: string) {
+  public async sendMessage(
+    chatName: string,
+    text: string,
+    parentId?: string,
+  ): Promise<void> {
     const chat = await this.getChat(chatName);
     const message: ChatMessage = {
       id: crypto.randomUUID(),
+      parentId: parentId || "",
       sender: this.getUserId(),
       senderAlias: this.alias,
       message: text,
