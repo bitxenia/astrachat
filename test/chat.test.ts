@@ -1,8 +1,10 @@
 import { Chat } from "../src/chat";
 import { ChatMessage } from "../src/message";
+import { logger } from "../src/utils/logger";
 import { MockAstraDb } from "./mock/mockAstraDb";
 
 test("Chat.create loads existing messages", async () => {
+  logger.setLevel("error");
   const mockDb = new MockAstraDb();
 
   const message: ChatMessage = {
@@ -23,6 +25,7 @@ test("Chat.create loads existing messages", async () => {
 });
 
 test("Chat.sendMessage emits and stores a message", async () => {
+  logger.setLevel("error");
   const mockDb = new MockAstraDb();
   const receivedMessages: ChatMessage[] = [];
 
@@ -46,6 +49,7 @@ test("Chat.sendMessage emits and stores a message", async () => {
 });
 
 test("Chat.getMessages returns existing messages", async () => {
+  logger.setLevel("error");
   const mockDb = new MockAstraDb();
 
   const message: ChatMessage = {
@@ -67,6 +71,7 @@ test("Chat.getMessages returns existing messages", async () => {
 });
 
 test("Chat listens to new messages and calls callback", async () => {
+  logger.setLevel("error");
   const mockDb = new MockAstraDb();
   const received: ChatMessage[] = [];
 

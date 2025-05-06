@@ -6,6 +6,7 @@ import { ChatMessage } from "./message";
 import { AstrachatNode } from "./astrachat";
 import { ChatMessageCallback } from "./chat";
 import { createAstraDb } from "@bitxenia/astradb";
+import { logger, LogLevel } from "./utils/logger";
 
 export interface AstrachatInit {
   chatSpace?: string;
@@ -19,13 +20,17 @@ export interface AstrachatInit {
   wsPort?: number;
   wssPort?: number;
   dataDir?: string;
+  logLevel?: LogLevel;
 }
 
 export async function createAstrachat(
   init: AstrachatInit,
 ): Promise<AstrachatNode> {
+  if (init.logLevel) logger.setLevel(init.logLevel);
+  logger.info("Creating Astrachat node...");
   const chatSpace = init.chatSpace ?? "bitxenia-chat";
   const alias = init.alias ?? "";
+  logger.debug("Creating AstraDb...");
   const astraDb = await createAstraDb({
     dbName: chatSpace,
     loginKey: init.loginKey,
@@ -38,6 +43,7 @@ export async function createAstrachat(
     WSSPort: init.wssPort ?? 50003,
     dataDir: init.dataDir,
   });
+  logger.debug("AstraDb created");
 
   return new AstrachatNode(chatSpace, alias, astraDb);
 }
