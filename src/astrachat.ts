@@ -65,7 +65,7 @@ export class AstrachatNode implements Astrachat {
       onNewMessage,
     );
     logger.debug(`[${this.alias}] Chat found, getting messages...`);
-    return chat.getMessages(onNewMessage);
+    return chat.getMessages();
   }
 
   public async sendMessage(
