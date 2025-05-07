@@ -5,7 +5,6 @@ import { MemoryDatastore } from "datastore-core";
 import { ChatMessage } from "./message";
 import { AstrachatNode } from "./astrachat";
 import { ChatMessageCallback } from "./chat";
-import { createAstraDb } from "@bitxenia/astradb";
 import { logger, LogLevel } from "./utils/logger";
 
 export interface AstrachatInit {
@@ -21,31 +20,41 @@ export interface AstrachatInit {
   wssPort?: number;
   dataDir?: string;
   logLevel?: LogLevel;
+
+  /**
+   * If true, the node will not connect to the network and will only work locally.
+
+   * This is useful for testing purposes.
+   *
+   * @default false
+   */
+  offlineMode?: boolean;
 }
 
 export async function createAstrachat(
   init: AstrachatInit,
 ): Promise<AstrachatNode> {
-  if (init.logLevel) logger.setLevel(init.logLevel);
-  logger.info("Creating Astrachat node...");
-  const chatSpace = init.chatSpace ?? "bitxenia-chat";
-  const alias = init.alias ?? "";
-  logger.debug("Creating AstraDb...");
-  const astraDb = await createAstraDb({
-    dbName: chatSpace,
-    loginKey: init.loginKey,
-    isCollaborator: init.isCollaborator ?? false,
-    datastore: init.datastore ?? new MemoryDatastore(),
-    blockstore: init.blockstore ?? new MemoryBlockstore(),
-    publicIp: init.publicIp ?? "0.0.0.0",
-    TcpPort: init.tcpPort ?? 50001,
-    WSPort: init.wsPort ?? 50002,
-    WSSPort: init.wssPort ?? 50003,
-    dataDir: init.dataDir,
-  });
-  logger.debug("AstraDb created");
+  // Set default values for the parameters if not provided
+  init.chatSpace = init.chatSpace ?? "bitxenia-chat";
+  init.alias = init.alias ?? "";
+  init.loginKey = init.loginKey ?? "";
+  init.isCollaborator = init.isCollaborator ?? false;
+  init.datastore = init.datastore ?? new MemoryDatastore();
+  init.blockstore = init.blockstore ?? new MemoryBlockstore();
+  init.publicIp = init.publicIp ?? "0.0.0.0";
+  init.tcpPort = init.tcpPort ?? 50001;
+  init.wsPort = init.wsPort ?? 50002;
+  init.wssPort = init.wssPort ?? 50003;
+  init.dataDir = init.dataDir ?? "./data/astrachat";
+  init.offlineMode = init.offlineMode ?? false;
 
-  return new AstrachatNode(chatSpace, alias, astraDb);
+  if (init.logLevel) logger.setLevel(init.logLevel);
+
+  logger.info("Creating Astrachat node...");
+  const node = new AstrachatNode(init.chatSpace);
+  await node.init(init);
+  logger.info("Astrachat node created & initialized");
+  return node;
 }
 
 export interface Astrachat {

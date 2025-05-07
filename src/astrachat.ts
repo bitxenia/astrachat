@@ -1,25 +1,40 @@
 import { AstraDb } from "@bitxenia/astradb";
 import { Chat, ChatMessageCallback } from "./chat";
-import { Astrachat, ChatMessage } from "./index";
+import { Astrachat, AstrachatInit, ChatMessage } from "./index";
 import { createMessage } from "./message";
 import { logger } from "./utils/logger";
+import { createAstraDb } from "@bitxenia/astradb";
 
 export class AstrachatNode implements Astrachat {
   chatSpace: string;
   alias: string;
   astraDb: AstraDb;
-  chats: Map<string, Chat>;
 
-  constructor(chatSpace: string, alias: string, astraDb: AstraDb) {
+  constructor(chatSpace: string) {
     this.chatSpace = chatSpace;
-    this.astraDb = astraDb;
-    this.chats = new Map();
+  }
 
-    if (!alias) {
+  public async init(init: AstrachatInit): Promise<void> {
+    logger.debug("Creating AstraDb...");
+    this.astraDb = await createAstraDb({
+      dbName: this.chatSpace,
+      loginKey: init.loginKey,
+      isCollaborator: init.isCollaborator,
+      datastore: init.datastore,
+      blockstore: init.blockstore,
+      publicIp: init.publicIp,
+      TcpPort: init.tcpPort,
+      WSPort: init.wsPort,
+      WSSPort: init.wssPort,
+      dataDir: init.dataDir,
+      offlineMode: init.offlineMode,
+    });
+    logger.debug("AstraDb created");
+
+    if (!init.alias) {
       logger.debug("No alias found, setting public key as alias");
-      this.alias = this.astraDb.getLoginPublicKey();
     }
-    this.alias = alias;
+    this.alias = init.alias || this.astraDb.getLoginPublicKey();
   }
 
   public async createChat(
@@ -33,7 +48,8 @@ export class AstrachatNode implements Astrachat {
       this.astraDb,
       callback,
     );
-    this.chats.set(chatName, chat);
+    const message = createMessage(this.getUserId(), this.alias, "Chat created");
+    await chat.sendMessage(message);
     logger.debug(`[${this.alias}] Chat "${chatName}" created`);
   }
 
@@ -42,7 +58,12 @@ export class AstrachatNode implements Astrachat {
     onNewMessage?: ChatMessageCallback,
   ): Promise<ChatMessage[]> {
     logger.info(`[${this.alias}] Getting messages from ${chatName}...`);
-    const chat = await this.getChat(chatName);
+    const chat = await Chat.create(
+      this.chatSpace,
+      chatName,
+      this.astraDb,
+      onNewMessage,
+    );
     logger.debug(`[${this.alias}] Chat found, getting messages...`);
     return chat.getMessages(onNewMessage);
   }
@@ -53,7 +74,7 @@ export class AstrachatNode implements Astrachat {
     parentId?: string,
   ): Promise<void> {
     logger.debug(`[${this.alias}] Sending message for ${chatName}...`);
-    const chat = await this.getChat(chatName);
+    const chat = await Chat.create(this.chatSpace, chatName, this.astraDb);
     const message = createMessage(this.getUserId(), this.alias, text, parentId);
     logger.debug(`[${this.alias}] Sending message with ID ${message.id}`);
     await chat.sendMessage(message);
@@ -82,14 +103,5 @@ export class AstrachatNode implements Astrachat {
   public setChatAlias(alias: string): void {
     this.alias = alias;
     logger.info(`[${this.alias}] New alias set: ${alias}`);
-  }
-
-  private async getChat(chatName: string): Promise<Chat> {
-    let chat = this.chats.get(chatName);
-    if (!chat) {
-      chat = await Chat.create(this.chatSpace, chatName, this.astraDb);
-      this.chats.set(chatName, chat);
-    }
-    return chat;
   }
 }
