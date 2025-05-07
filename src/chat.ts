@@ -17,8 +17,8 @@ export class Chat {
     onNewMessage?: ChatMessageCallback,
   ) {
     logger.debug("Creating Chat...");
-    const allChats = await astraDb.getAllKeys();
     let messages: ChatMessage[] = [];
+    const allChats = await astraDb.getAllKeys();
     if (allChats.includes(chatName)) {
       logger.info("Existing Chat found, getting messages...");
       const rawMessages = await astraDb.get(chatName);
@@ -26,15 +26,7 @@ export class Chat {
         constructMessage(rawMessage),
       );
       logger.info(`Found ${messages.length} messages in existing Chat`);
-    } else {
-      logger.debug("New Chat detected, creating...");
-      const firstMessage = createMessage("astrachat", "Astrachat", "");
-      await astraDb.add(chatName, JSON.stringify(firstMessage));
-      logger.debug(`${chatName} created in ${chatSpace}`);
-      messages = [firstMessage];
-      logger.info("New Chat created with default first message");
     }
-
     return new Chat(chatSpace, chatName, messages, astraDb, onNewMessage);
   }
 
@@ -75,7 +67,6 @@ export class Chat {
       (value: string) => {
         const newMessage = constructMessage(value);
         logger.info("New message detected in callback: ", newMessage.id);
-        this.messages.push(newMessage);
         logger.debug("Calling set callback...");
         callback(newMessage);
       },
