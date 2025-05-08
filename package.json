@@ -1,6 +1,6 @@
 {
   "name": "@bitxenia/astrachat",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Decentralized p2p real-time chat on IPFS ",
   "keywords": [
     "chat",
@@ -34,6 +34,11 @@
     "format:check": "prettier --check .",
     "prepare": "husky install"
   },
+  "dependencies": {
+    "@bitxenia/astradb": "0.0.20",
+    "blockstore-core": "5.0.2",
+    "datastore-core": "10.0.2"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.3",
@@ -44,10 +49,5 @@
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "husky": "^8.0.0"
-  },
-  "dependencies": {
-    "@bitxenia/astradb": "^0.0.19",
-    "blockstore-core": "^5.0.2",
-    "datastore-core": "^10.0.2"
   }
 }
