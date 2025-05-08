@@ -48,9 +48,8 @@ export class Chat {
     }
   }
 
-  public getMessages(onNewMessage?: ChatMessageCallback): ChatMessage[] {
+  public getMessages(): ChatMessage[] {
     logger.info(`Getting messages for ${this.chatName}`);
-    if (onNewMessage) this.listenToNewMessages(onNewMessage);
     this.messages.sort((a, b) => a.timestamp - b.timestamp);
     return this.messages;
   }
