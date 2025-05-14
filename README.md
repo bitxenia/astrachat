@@ -167,9 +167,10 @@ creating the node in the `createAstrachat` function.
 
 The ports that need to be opened manually are:
 
-- `50001` used to receive `TCP` incoming connections.
-- `50002` used to receive `WebSocket` incoming connections.
-- `50003` used to receive `WebSocketSecure` upgraded by `autoTLS` incoming connections.
+- `50001` TCP port, used to receive `TCP` incoming connections.
+- `50002` TCP port, used to receive `WebSocket` incoming connections.
+- `50003` TCP port, used to receive `WebSocketSecure` upgraded by `autoTLS` incoming connections.
+- `50001` UDP port, used to receive `WebRTC-Direct` incoming connections.
 
 If this doesn't work, your ISP may be using Double NAT, which prevents
 incoming connections. In this case, you may need to contact your ISP to request
