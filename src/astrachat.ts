@@ -104,4 +104,8 @@ export class AstrachatNode implements Astrachat {
     this.alias = alias;
     logger.info(`[${this.alias}] New alias set: ${alias}`);
   }
+
+  public async getNodeMultiaddrs(): Promise<string[]> {
+    return await this.astraDb.getNodeMultiaddrs();
+  }
 }

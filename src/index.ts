@@ -79,6 +79,13 @@ export interface Astrachat {
   getAlias(): string;
 
   setChatAlias(alias: string): void;
+
+  /**
+   * Retrieves the public multiaddresses of the astrachat node.
+   *
+   * This multiaddresses can be used as bootstrapProviderPeers from other nodes.
+   */
+  getNodeMultiaddrs: () => Promise<string[]>;
 }
 
 export { ChatMessage } from "./message";
