@@ -20,7 +20,7 @@ export interface AstrachatInit {
   wssPort?: number;
   webrtcDirectPort?: number;
   dataDir?: string;
-  bootstrapPeers?: string[];
+  bootstrapProviderPeers?: string[];
   logLevel?: LogLevel;
 
   /**
@@ -49,7 +49,7 @@ export async function createAstrachat(
   init.wssPort = init.wssPort ?? 50003;
   init.webrtcDirectPort = init.webrtcDirectPort ?? 50001;
   init.dataDir = init.dataDir ?? "./data/astrachat";
-  init.bootstrapPeers = init.bootstrapPeers ?? [];
+  init.bootstrapProviderPeers = init.bootstrapProviderPeers ?? [];
   init.offlineMode = init.offlineMode ?? false;
 
   if (init.logLevel) logger.setLevel(init.logLevel);

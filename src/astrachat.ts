@@ -28,7 +28,7 @@ export class AstrachatNode implements Astrachat {
       wssPort: init.wssPort,
       webRTCDirectPort: init.webrtcDirectPort,
       dataDir: init.dataDir,
-      bootstrapPeers: init.bootstrapPeers,
+      bootstrapProviderPeers: init.bootstrapProviderPeers,
       offlineMode: init.offlineMode,
     });
     logger.debug("AstraDb created");
