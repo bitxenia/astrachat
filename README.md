@@ -145,8 +145,7 @@ return await createAstrachat({
   datastore,
   blockstore,
   tcpPort: 51001,
-  wsPort: 51002,
-  wssPort: 51003,
+  webrtcDirectPort: 51001,
   dataDir: "./data/node1",
 });
 ```
@@ -168,8 +167,6 @@ creating the node in the `createAstrachat` function.
 The ports that need to be opened manually are:
 
 - `50001` TCP port, used to receive `TCP` incoming connections.
-- `50002` TCP port, used to receive `WebSocket` incoming connections.
-- `50003` TCP port, used to receive `WebSocketSecure` upgraded by `autoTLS` incoming connections.
 - `50001` UDP port, used to receive `WebRTC-Direct` incoming connections.
 
 If this doesn't work, your ISP may be using Double NAT, which prevents

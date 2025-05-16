@@ -16,8 +16,6 @@ export interface AstrachatInit {
   blockstore?: Blockstore;
   publicIp?: string;
   tcpPort?: number;
-  wsPort?: number;
-  wssPort?: number;
   webrtcDirectPort?: number;
   dataDir?: string;
   bootstrapProviderPeers?: string[];
@@ -45,8 +43,6 @@ export async function createAstrachat(
   init.blockstore = init.blockstore ?? new MemoryBlockstore();
   init.publicIp = init.publicIp ?? "0.0.0.0";
   init.tcpPort = init.tcpPort ?? 50001;
-  init.wsPort = init.wsPort ?? 50002;
-  init.wssPort = init.wssPort ?? 50003;
   init.webrtcDirectPort = init.webrtcDirectPort ?? 50001;
   init.dataDir = init.dataDir ?? "./data/astrachat";
   init.bootstrapProviderPeers = init.bootstrapProviderPeers ?? [];

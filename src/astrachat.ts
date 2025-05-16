@@ -24,8 +24,6 @@ export class AstrachatNode implements Astrachat {
       blockstore: init.blockstore,
       publicIp: init.publicIp,
       tcpPort: init.tcpPort,
-      wsPort: init.wsPort,
-      wssPort: init.wssPort,
       webRTCDirectPort: init.webrtcDirectPort,
       dataDir: init.dataDir,
       bootstrapProviderPeers: init.bootstrapProviderPeers,
