@@ -1,6 +1,6 @@
 {
   "name": "@bitxenia/astrachat",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "Decentralized p2p real-time chat on IPFS ",
   "keywords": [
     "chat",
@@ -35,7 +35,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@bitxenia/astradb": "0.1.6",
+    "@bitxenia/astradb": "0.1.7",
     "blockstore-core": "5.0.2",
     "datastore-core": "10.0.2"
   },
