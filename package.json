@@ -29,7 +29,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detect-open-handles",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky install"
@@ -42,12 +42,15 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.3",
+    "blockstore-fs": "^2.0.4",
+    "datastore-fs": "^10.0.4",
+    "husky": "^8.0.0",
     "jest": "^29.7.0",
     "prettier": "^3.5.3",
+    "public-ip": "^7.0.1",
     "ts-jest": "^29.3.2",
     "ts-node-dev": "^2.0.0",
     "tsup": "^8.4.0",
-    "typescript": "^5.8.3",
-    "husky": "^8.0.0"
+    "typescript": "^5.8.3"
   }
 }
